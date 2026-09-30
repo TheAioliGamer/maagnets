@@ -1,13 +1,17 @@
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
 
 public class Player : MonoBehaviour
 {
     public GameObject player;
     public GameObject camPivot;
+    private GameObject cam;
+    public Renderer lastSeen;
     public float moveSpeed;
     public float sprintMod;
     public float jumpHeight;
     public float sensitivity;
+    public float magnet;
     private float pitch;
     private float yaw;
     public bool grounded;
@@ -17,14 +21,14 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        cam = GameObject.FindWithTag("MainCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        Debug.Log(rb);
+        //Debug.Log(rb);
         if (grounded == false)
         {
             crouching = false;
@@ -42,6 +46,41 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
             grounded = false;
+        }
+        #endregion
+        #region magnetism
+        RaycastHit highlight;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out highlight))
+        {
+            if(highlight.collider.CompareTag("Ground") || highlight.collider.CompareTag("Wall") || highlight.collider.CompareTag("Ceiling"))
+            {
+                //Debug.Log("Grond heheheh");
+                if (Input.GetKey(KeyCode.Mouse0))
+                {
+                    rb.AddForce((player.transform.position - highlight.collider.transform.position) * magnet, ForceMode.Acceleration);
+                }
+                if (Input.GetKey(KeyCode.Mouse1))
+                {
+                    rb.AddForce(-(player.transform.position - highlight.collider.transform.position) * magnet, ForceMode.Acceleration);
+                }
+            }
+            /*Renderer redner = highlight.collider.gameObject.GetComponent<Renderer>();
+            if (redner != null)
+            {
+                if (lastSeen != redner)
+                {
+                    if (lastSeen != null)
+                    {
+                        Color c = lastSeen.material.color;
+                        c.a = 1;
+                        lastSeen.material.color = c;
+                    }
+                }
+                Color heehee = redner.material.color;
+                heehee.a = 0.2f;
+                redner.material.color = heehee;
+                lastSeen = redner;
+            }*/
         }
         #endregion
     }
@@ -102,12 +141,12 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            Vector3 moveLeft = new Vector3(1, 0, 0);
+            Vector3 moveLeft = new Vector3(-1, 0, 0);
             transform.position += (transform.right * moveLeft.x + transform.forward * moveLeft.z) * moveSpeed * sprintMod * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            Vector3 moveRight = new Vector3(-1, 0, 0);
+            Vector3 moveRight = new Vector3(1, 0, 0);
             transform.position += (transform.right * moveRight.x + transform.forward * moveRight.z) * moveSpeed * sprintMod * Time.deltaTime;
         }
 
