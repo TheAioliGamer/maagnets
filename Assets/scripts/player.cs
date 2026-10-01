@@ -82,11 +82,11 @@ public class Player : MonoBehaviour
                 //Debug.Log("Grond heheheh");
                 if (Input.GetKey(KeyCode.Mouse0))
                 {
-                    rb.AddForce((player.transform.position - highlight.collider.transform.position) * magnet, ForceMode.Acceleration);
+                    rb.AddForce(highlight.transform.up * magnet, ForceMode.Acceleration);
                 }
                 if (Input.GetKey(KeyCode.Mouse1))
                 {
-                    rb.AddForce(-(player.transform.position - highlight.collider.transform.position) * magnet, ForceMode.Acceleration);
+                    rb.AddForce(-highlight.transform.up * magnet, ForceMode.Acceleration);
                 }
             }
             // highlights what surface is being magnetised

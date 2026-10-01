@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\ASout\\Downloads\\maagnets\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5CE854D9-1FEF-7C51-6612-59885EABB06A}|Assembly-CSharp.csproj|C:\\Users\\ASout\\Downloads\\maagnets\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5CE854D9-1FEF-7C51-6612-59885EABB06A}|Assembly-CSharp.csproj|c:\\users\\asout\\downloads\\maagnets\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CE854D9-1FEF-7C51-6612-59885EABB06A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -30,8 +30,7 @@
               "RelativeToolTip": "Assets\\scripts\\gDetection.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-01T06:27:48.148Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-01T06:27:48.148Z"
             },
             {
               "$type": "Document",
@@ -41,7 +40,7 @@
               "RelativeDocumentMoniker": "Assets\\scripts\\player.cs",
               "ToolTip": "C:\\Users\\ASout\\Downloads\\maagnets\\Assets\\scripts\\player.cs",
               "RelativeToolTip": "Assets\\scripts\\player.cs",
-              "ViewState": "AQIAAFIAAAAAAAAAAAAAAFsAAAA6AAAA",
+              "ViewState": "AQIAABwAAAAAAAAAAAAqwFcAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-30T13:45:52.482Z",
               "EditorCaption": ""
