@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.X86;
 
@@ -14,7 +15,10 @@ public class Player : MonoBehaviour
     public float magnet;
     private float pitch;
     private float yaw;
+    public Vector3 wallJump;
     public bool grounded;
+    public bool walled;
+    public bool ceilinged;
     public bool sprinting;
     public bool crouching;
 
@@ -33,6 +37,17 @@ public class Player : MonoBehaviour
         {
             crouching = false;
         }
+        else
+        {
+            grounded = true;
+            walled = false;
+            ceilinged = false;
+            rb.linearVelocity = Vector3.zero;
+        }
+        if (walled == true || ceilinged == true)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
         #region camera movement
         // This code is all essential for the mouse to control the camera
         pitch = Mathf.Clamp(pitch, -90, 90);
@@ -46,6 +61,16 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
             grounded = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && ceilinged == true)
+        {
+            rb.AddForce(Vector3.down * jumpHeight, ForceMode.Impulse);
+            ceilinged = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && walled == true && grounded == false && ceilinged == false)
+        {
+            rb.AddForce(wallJump * jumpHeight, ForceMode.Impulse);
+            walled = false;
         }
         #endregion
         #region magnetism
@@ -64,27 +89,32 @@ public class Player : MonoBehaviour
                     rb.AddForce(-(player.transform.position - highlight.collider.transform.position) * magnet, ForceMode.Acceleration);
                 }
             }
-            /*Renderer redner = highlight.collider.gameObject.GetComponent<Renderer>();
+            // highlights what surface is being magnetised
+            Renderer redner = highlight.collider.gameObject.GetComponent<Renderer>();
             if (redner != null)
             {
+                if (redner.CompareTag("Ground") || redner.CompareTag("Wall") || redner.CompareTag("Ceiling"))
                 if (lastSeen != redner)
                 {
                     if (lastSeen != null)
                     {
                         Color c = lastSeen.material.color;
-                        c.a = 1;
+                        c.r = 1;
+                        c.g = 1;
                         lastSeen.material.color = c;
                     }
                 }
                 Color heehee = redner.material.color;
-                heehee.a = 0.2f;
+                heehee.r = 0.6f;
+                heehee.g = 0.6f;
                 redner.material.color = heehee;
                 lastSeen = redner;
-            }*/
+            }
         }
         #endregion
     }
 
+    // is called once every set amount of time
     void FixedUpdate()
     {
         #region player movement
@@ -102,6 +132,7 @@ public class Player : MonoBehaviour
         }
         #endregion
         #region crouching
+        /*
         if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.C))
         {
             if (sprinting == false && grounded == true)
@@ -127,6 +158,7 @@ public class Player : MonoBehaviour
             moveSpeed = 10;
             player.transform.localScale = new Vector3(1, 1, 1);
         }
+        */
         #endregion
         #region walking
         if (Input.GetKey(KeyCode.W))

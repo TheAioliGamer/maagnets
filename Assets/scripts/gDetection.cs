@@ -11,7 +11,19 @@ public class gDetection : MonoBehaviour
         if (other.tag == ("Ground"))
         {
             player.grounded = true;
-            Debug.Log("poo");
         }
+        else if (other.tag == ("Wall"))
+        {
+            player.walled = true;
+            player.wallJump = other.transform.up - other.transform.right;
+        }
+        else if ( other.tag == ("Ceiling"))
+        {
+            player.ceilinged = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }
