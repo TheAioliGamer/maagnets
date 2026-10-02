@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public bool ceilinged;
     public bool sprinting;
     public bool crouching;
+    public surface surface;
+    public Rigidbody rb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,7 +33,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
+        //public Rigidbody rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         //Debug.Log(rb);
         if (grounded == false)
         {
@@ -42,7 +45,6 @@ public class Player : MonoBehaviour
             grounded = true;
             walled = false;
             ceilinged = false;
-            rb.linearVelocity = Vector3.zero;
         }
         if (walled == true || ceilinged == true)
         {
@@ -59,25 +61,27 @@ public class Player : MonoBehaviour
         #region jumping
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
-            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
             grounded = false;
+            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Space) && ceilinged == true)
         {
-            rb.AddForce(Vector3.down * jumpHeight, ForceMode.Impulse);
             ceilinged = false;
+            rb.AddForce(Vector3.down * jumpHeight, ForceMode.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Space) && walled == true && grounded == false && ceilinged == false)
         {
-            rb.AddForce(wallJump * jumpHeight, ForceMode.Impulse);
             walled = false;
+            rb.AddForce(wallJump * jumpHeight, ForceMode.Impulse);
         }
         #endregion
         #region magnetism
         RaycastHit highlight;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out highlight))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out highlight, 40))
         {
-            if(highlight.collider.CompareTag("Ground") || highlight.collider.CompareTag("Wall") || highlight.collider.CompareTag("Ceiling"))
+            surface = highlight.transform.GetComponent<surface>();
+            surface.Seen = true;
+            if (highlight.collider.CompareTag("Ground") || highlight.collider.CompareTag("Wall") || highlight.collider.CompareTag("Ceiling"))
             {
                 //Debug.Log("Grond heheheh");
                 if (Input.GetKey(KeyCode.Mouse0))
@@ -89,26 +93,45 @@ public class Player : MonoBehaviour
                     rb.AddForce(-highlight.transform.up * magnet, ForceMode.Acceleration);
                 }
             }
-            // highlights what surface is being magnetised
+            //highlights what surface is being magnetised
             Renderer redner = highlight.collider.gameObject.GetComponent<Renderer>();
-            if (redner != null)
+            if (redner != null && surface.seen == true)
             {
                 if (redner.CompareTag("Ground") || redner.CompareTag("Wall") || redner.CompareTag("Ceiling"))
-                if (lastSeen != redner)
                 {
-                    if (lastSeen != null)
+                    if (lastSeen != redner)
                     {
-                        Color c = lastSeen.material.color;
-                        c.r = 1;
-                        c.g = 1;
-                        lastSeen.material.color = c;
+                        if (lastSeen != null)
+                        {
+                            Color c = lastSeen.material.color;
+                            c.r = 1;
+                            c.g = 1;
+                            lastSeen.material.color = c;
+                        }
+                        Color heehee = redner.material.color;
+                        heehee.r = 0.6f;
+                        heehee.g = 0.6f;
+                        redner.material.color = heehee;
+                        lastSeen = redner;
                     }
+                    else
+                    {
+
+                    }
+                    /*Color heehee = redner.material.color;
+                    heehee.r = 0.6f;
+                    heehee.g = 0.6f;
+                    redner.material.color = heehee;
+                    lastSeen = redner;*/
                 }
-                Color heehee = redner.material.color;
-                heehee.r = 0.6f;
-                heehee.g = 0.6f;
-                redner.material.color = heehee;
-                lastSeen = redner;
+            }
+            else if (highlight.collider == null)
+            {
+                Debug.Log("poopman");
+                Color c = lastSeen.material.color;
+                c.r = 1;
+                c.g = 1;
+                lastSeen.material.color = c;
             }
         }
         #endregion
