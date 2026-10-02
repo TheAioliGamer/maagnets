@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public bool sprinting;
     public bool crouching;
     public surface surface;
+    public GameManager gameManager;
     public Rigidbody rb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,11 +53,14 @@ public class Player : MonoBehaviour
         }
         #region camera movement
         // This code is all essential for the mouse to control the camera
-        pitch = Mathf.Clamp(pitch, -90, 90);
-        yaw += sensitivity * Input.GetAxis("Mouse X");
-        pitch += sensitivity * Input.GetAxis("Mouse Y");
-        camPivot.transform.eulerAngles = new Vector3(-pitch, yaw, 0.0f);
-        player.transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+        if (gameManager.paused == false)
+        {
+            pitch = Mathf.Clamp(pitch, -90, 90);
+            yaw += sensitivity * Input.GetAxis("Mouse X");
+            pitch += sensitivity * Input.GetAxis("Mouse Y");
+            camPivot.transform.eulerAngles = new Vector3(-pitch, yaw, 0.0f);
+            player.transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+        }
         #endregion
         #region jumping
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)

@@ -120,7 +120,6 @@
 -define:ENABLE_UNITY_COLLECTIONS_CHECKS
 -define:ENABLE_BURST_AOT
 -define:UNITY_TEAM_LICENSE
--define:UNITY_PRO_LICENSE
 -define:ENABLE_CUSTOM_RENDER_TEXTURE
 -define:ENABLE_DIRECTOR
 -define:ENABLE_LOCALIZATION
@@ -375,8 +374,6 @@
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.72f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlDocument.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.72f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlSerializer.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/6000.0.72f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.72f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Gradle.dll"
--r:"C:/Program Files/Unity/Hub/Editor/6000.0.72f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll"
 -r:"Library/PackageCache/com.unity.collections@12999e356c23/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll"
 -r:"Library/PackageCache/com.unity.collections@12999e356c23/Unity.Collections.Tests/System.IO.Hashing/System.IO.Hashing.dll"
 -r:"Library/PackageCache/com.unity.collections@12999e356c23/Unity.Collections.Tests/System.Runtime.CompilerServices.Unsafe/System.Runtime.CompilerServices.Unsafe.dll"
@@ -439,8 +436,9 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.72f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 "Assets/scripts/gDetection.cs"
+"Assets/scripts/gameManager.cs"
 "Assets/scripts/player.cs"
-"Assets/surface.cs"
+"Assets/scripts/surface.cs"
 -langversion:9.0
 /deterministic
 /optimize+
